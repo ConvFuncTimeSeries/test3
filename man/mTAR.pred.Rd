@@ -2,7 +2,7 @@
 % Please edit documentation in R/m_SETAR.r
 \name{mTAR.pred}
 \alias{mTAR.pred}
-\title{Prediction of a Fitted Multivariate TAR Model}
+\title{Prediction of A Fitted Multivariate TAR Model}
 \usage{
 mTAR.pred(model, orig, h = 1, iterations = 3000, ci = 0.95,
   output = TRUE)
@@ -24,10 +24,10 @@ mTAR.pred(model, orig, h = 1, iterations = 3000, ci = 0.95,
 mTAR.pred returns a list with components:
 \item{model}{the multivariate TAR model.}
 \item{pred}{prediction.}
-\item{Ysim}{fitted y.}
+\item{Ysim}{fitted \code{y}.}
 }
 \description{
-Prediction of a Fitted Multivariate TAR Model
+Prediction of a fitted multivariate TAR model.
 }
 \examples{
 phi1=matrix(c(0.5,0.7,0.3,0.2),2,2)

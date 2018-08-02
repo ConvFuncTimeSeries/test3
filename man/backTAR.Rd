@@ -2,7 +2,7 @@
 % Please edit documentation in R/Hpo_test.r
 \name{backTAR}
 \alias{backTAR}
-\title{Perform back-test of a univariate SETAR model.}
+\title{Backtest for Univariate TAR Models}
 \usage{
 backTAR(model, orig, h = 1, iter = 3000)
 }
@@ -14,6 +14,12 @@ backTAR(model, orig, h = 1, iter = 3000)
 \item{h}{forecast horizon.}
 
 \item{iter}{number of iterations.}
+}
+\value{
+\code{backTAR} returns a list of components:
+\item{model}{SETAR model.}
+\item{error}{prediction errors.}
+\item{State}{predicted states.}
 }
 \description{
 Perform back-test of a univariate SETAR model.

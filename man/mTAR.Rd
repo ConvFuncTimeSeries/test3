@@ -8,13 +8,13 @@ mTAR(y, p1, p2, thr = NULL, thrV = NULL, delay = c(1, 1), Trim = c(0.15,
   0.85), k0 = 300, include.mean = TRUE, score = "AIC")
 }
 \arguments{
-\item{y}{a (nT-by-k) data matrix of multivariate time series, where nT is the sample size and k is the dimension.}
+\item{y}{a (\code{nT}-by-\code{k}) data matrix of multivariate time series, where \code{nT} is the sample size and \code{k} is the dimension.}
 
 \item{p1}{AR-order of regime 1.}
 
 \item{p2}{AR-order of regime 2.}
 
-\item{thr}{threshold variable. Estimation is needed if thr = NULL.}
+\item{thr}{threshold variable. Estimation is needed if \code{thr} = NULL.}
 
 \item{thrV}{vector of threshold variable. If it is not null, thrV must have the same sample size of that of y.}
 
@@ -33,17 +33,17 @@ mTAR(y, p1, p2, thr = NULL, thrV = NULL, delay = c(1, 1), Trim = c(0.15,
 \value{
 mTAR returns a listh with the following components:
 \item{data}{the data matrix, y.}
-\item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns show these in regime 2.}
+\item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns show these in regime 2.}
 \item{arorder}{AR orders of regimes 1 and 2.}
 \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
 \item{residuals}{estimated innovations.}
 \item{nobs}{numbers of observations in regimes 1 and 2.}
 \item{model1, model2}{estimated models of regimes 1 and 2.}
 \item{thr}{threshold value.}
-\item{delay}{two elements (i,d) with "i" being the component and "d" the delay for threshold variable.}
+\item{delay}{two elements (\code{i},\code{d}) with "\code{i}" being the component and "\code{d}" the delay for threshold variable.}
 \item{thrV}{vector of threshold variable.}
-\item{D}{D.}
-\item{RSS}{RSS.}
+\item{D}{a set of positive threshold values.}
+\item{RSS}{residual sum of squares.}
 \item{information}{overall information criteria.}
 \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 \item{sresi}{standardized residuals.}
@@ -60,8 +60,9 @@ sigma2=matrix(c(1,0,0,1),2,2)
 c1=c(0,0)
 c2=c(0,0)
 delay=c(1,1)
-y=mTAR.sim(100,0,phi1,phi2,sigma1,sigma2,c1,c2,delay,ini=500)
+y=mTAR.sim(1000,0,phi1,phi2,sigma1,sigma2,c1,c2,delay,ini=500)
 est=mTAR(y$series,1,1,0,y$series,delay,Trim,300,include.mean,"AIC")
+est2=mTAR(y$series,1,1,NULL,y$series,delay,Trim,300,include.mean,"AIC")
 }
 \references{
 Li, D., and Tong. H. (2016) Nested sub-sample search algorithm for estimation of threshold models. \emph{Statisitca Sinica}, 1543-1554.

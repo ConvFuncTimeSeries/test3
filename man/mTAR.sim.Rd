@@ -2,7 +2,7 @@
 % Please edit documentation in R/m_SETAR.r
 \name{mTAR.sim}
 \alias{mTAR.sim}
-\title{Genreates Two-Regime (VAR) Models}
+\title{Generate Two-Regime (VAR) Models}
 \usage{
 mTAR.sim(nob, thr, phi1, phi2, sigma1, sigma2 = NULL, c1 = NULL,
   c2 = NULL, delay = c(1, 1), ini = 500)
@@ -38,7 +38,7 @@ mTAR.sim returns a list with following components:
 \item{n2}{number of observations in regime 2.}
 }
 \description{
-Genreates two-regime multivariate vector auto-regressive models.
+Generates two-regime multivariate vector auto-regressive models.
 }
 \examples{
 phi1=matrix(c(0.5,0.7,0.3,0.2),2,2)

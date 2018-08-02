@@ -1,8 +1,8 @@
-#' Autoregressive Condtional Mean Models
+#' Estimation of Autoregressive Condtional Mean Models
 #' 
 #' Estimation of autoregressive conditionl mean models with exogeneous variables.
 #' @param y time series of counts.
-#' @param order AR order.
+#' @param order the order of ACM model.
 #' @param X matrix of exogenous variables.
 #' @param cond.dist conditional distributions. "po" for Poisson, "nb" for negative binomial, "dp" for double Poisson.
 #' @param ini initial parameter estimates designed for use in "nb" and "dp".
@@ -15,7 +15,7 @@
 #' @examples
 #' X=matrix(rnorm(100,100,1))
 #' y=rpois(100,10)
-#' ACMx(y,c(1,1),X,"nb")
+#' ACMx(y,c(1,1),X,"po")
 #' @export
 "ACMx" <- function(y,order=c(1,1),X=NULL,cond.dist="po",ini=NULL){
 beta=NULL; k=0; withX=FALSE; nT=length(y)
@@ -274,7 +274,7 @@ sresi=resi/sqrt(rate)
 ACMx <- list(data=y,X=X,estimates=est,residuals=resi,sresi=sresi)
 }
 
-### Negative Binomial distribution  ################
+
 #' @export
 "nbiX" <- function(par,PCAxY,PCAxX,PCAxOrd){
 ## compute the log-likelihood function of negative binomial distribution
@@ -305,7 +305,7 @@ lnNBi=dnbinom(y[ist:nT],size=theta,prob=pb,log=T)
 nbiX <- -sum(lnNBi)
 }
 
-#################################################################
+
 #' @export
 "poX" <- function(par,PCAxY,PCAxX,PCAxOrd){
 y <- PCAxY; X <- PCAxX; order <- PCAxOrd
@@ -334,4 +334,64 @@ rate=bb[ist:nT]*r1
 lnPoi=dpois(y[ist:nT],rate,log=T)
 poX <- -sum(lnPoi)
 }
+
+
+
+
+#' @export
+"dpX" <- function(par,PCAxY,PCAxX,PCAxOrd){
+# compute the log-likelihood function of a double Poisson distribution
+y <- PCAxY; X <- PCAxX; order <- PCAxOrd
+withX=F; k = 0
+#
+if(!is.null(X)){
+withX=TRUE; k=dim(X)[2]
+}
+bb=rep(1,length(y)); y1=y
+if(withX){beta=par[1:k]; bb=exp(X%*%matrix(beta,k,1))}#; y1=y/bb}
+icnt=k+1
+ome=par[icnt]
+p=order[1]; q=order[2]; nT=length(y)
+if(p > 0){a1=par[(icnt+1):(icnt+p)]; icnt=icnt+p
+nobe=nT-p; rate=rep(ome,nobe); ist=p+1
+for (i in 1:p){
+rate=rate+a1[i]*y1[(ist-i):(nT-i)]
+}
+}
+#plot(rate,type='l')
+
+if(q > 0){g1=par[(icnt+1):(icnt+q)]; icnt=icnt+q
+r1=filter(rate,g1,"r",init=rep(mean(y/bb),q))
+}
+theta=par[icnt+1]
+rate=bb[ist:nT]*r1
+yy=y[ist:nT]
+rate1 = rate*theta
+cinv=1+(1-theta)/(12*rate1)*(1+1/rate1)
+lcnt=-log(cinv)
+lpd=lcnt+0.5*log(theta)-rate1
+idx=c(1:nobe)[yy > 0]
+tp=length(idx)
+d1=apply(matrix(yy[idx],tp,1),1,factorialOwn)
+lpd[idx]=lpd[idx]-d1-yy[idx]+yy[idx]*log(yy[idx])+theta*yy[idx]*(1+log(rate[idx])-log(yy[idx])) 
+#plot(lpd,type='l')
+#cat("neg-like: ",-sum(lpd),"\n")
+
+dpX <- -sum(lpd)
+}
+
+
+#' @export
+"factorialOwn" <- function(n,log=T){
+x=c(1:n)
+if(log){
+x=log(x)
+y=cumsum(x)
+}
+else{
+y=cumprod(x)
+}
+y[n]
+}
+
 

@@ -9,7 +9,7 @@ ACMx(y, order = c(1, 1), X = NULL, cond.dist = "po", ini = NULL)
 \arguments{
 \item{y}{time series of counts.}
 
-\item{order}{AR order.}
+\item{order}{the order of ACM model.}
 
 \item{X}{matrix of exogenous variables.}
 
@@ -31,5 +31,5 @@ Estimation of autoregressive conditionl mean models with exogeneous variables.
 \examples{
 X=matrix(rnorm(100,100,1))
 y=rpois(100,10)
-ACMx(y,c(1,1),X,"nb")
+ACMx(y,c(1,1),X,"po")
 }

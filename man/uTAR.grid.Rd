@@ -2,7 +2,7 @@
 % Please edit documentation in R/u_SETAR.r
 \name{uTAR.grid}
 \alias{uTAR.grid}
-\title{Search for Threshold Value of a SETAR Model}
+\title{Search for Threshold Value of A Two-Regime SETAR Model}
 \usage{
 uTAR.grid(y, p1, p2, d = 1, thrV = NULL, thrQ = c(0, 1), Trim = c(0.1,
   0.9), include.mean = T)
@@ -34,20 +34,20 @@ uTAR.grid returns a list with components:
 \item{model1,model2}{estimated models of regimes 1 and 2.}
 \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 \item{thr}{threshold value.}
-\item{D}{D.}
-\item{RSS}{RSS.}
+\item{D}{a set of possible threshold values.}
+\item{RSS}{residual sum of squares.}
 \item{information}{information criterion.}
 \item{sresi}{standardized residuals.}
 }
 \description{
-Search for the threshold of a SETAR model for a given range of threshold candidates.
-Perform recursive LS estimation.
+Search for the threshold of a SETAR model for a given range of candidates for threshold values,
+and perform recursive LS estimation.
 The program uses a grid to search for threshold value.
 It is a conservative approach, but might be more reliable than the Li and Tong (2016) procedure.
 }
 \examples{
 arorder=rep(1,2)
-ar.coef=matrix(c(0.7,-0.8),k,1)
+ar.coef=matrix(c(0.7,-0.8),2,1)
 y=uTAR.sim(100,arorder,ar.coef,1,0)
 uTAR.grid(y$series,1,1,1,y$series,c(0,1),c(0.2,0.8),TRUE)
 }

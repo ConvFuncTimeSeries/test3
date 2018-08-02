@@ -7,23 +7,25 @@
 MSM.fit(y, p, nregime = 2, include.mean = T, sw = NULL)
 }
 \arguments{
-\item{y}{a time series}
+\item{y}{a time series.}
 
-\item{p}{AR order}
+\item{p}{AR order.}
 
-\item{nregime}{the number of regimes}
+\item{nregime}{the number of regimes.}
 
-\item{include.mean}{a logical value for including constant terms}
+\item{include.mean}{a logical value for including constant terms.}
 
-\item{sw}{logical values for whether coefficients are switching. The length of sw has to be equal of the number of coefficients in the model plus include.mean.}
+\item{sw}{logical values for whether coefficients are switching. The length of \code{sw} has to be equal of the number of coefficients in the model plus include.mean.}
 }
 \value{
-MSM.fit returns an object of class MSM.lm or MSM.glm, depending on the input model.
+\code{MSM.fit} returns an object of class code{MSM.lm} or \code{MSM.glm}, depending on the input model.
 }
 \description{
 Fit autoregressive Markov switching models to a univariate time series using the package MSwM.
 }
 \examples{
 y=MSM.sim(100,c(1,1),0.7,-0.5,c(0.5,0.6),c(1,1),c(0,0),500)
+library(parallel)
+library(MSwM)
 MSM.fit(y$series,1,2,TRUE,c(TRUE,TRUE,TRUE))
 }

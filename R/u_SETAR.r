@@ -19,7 +19,7 @@
 #' \item{sigma}{standard error for each regime.}
 #' @examples
 #' arorder=rep(1,2)
-#' ar.coef=matrix(c(0.7,-0.8),k,1)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' @export
 "uTAR.sim" <- function(nob,arorder,phi,d=1,thr=c(0,0),sigma=c(1,1,1),cnst=rep(0,3),ini=500){
@@ -88,7 +88,7 @@ uTAR.sim <- list(series = zt[(ini+1):nT], at=at[(ini+1):nT], arorder=arorder,thr
 
 #' Estimation of a Univariate Two-Regime SETAR Model
 #'
-#' Estimation of a univariate two-regime SETAR model, including threshold.
+#' Estimation of a univariate two-regime SETAR model, including threshold value.
 #' The procedure of Li and Tong (2016) is used to search for the threshold.
 #' @param y a vector of time series.
 #' @param p1,p2 AR-orders of regime 1 and regime 2.
@@ -110,14 +110,14 @@ uTAR.sim <- list(series = zt[(ini+1):nT], at=at[(ini+1):nT], arorder=arorder,thr
 #' \item{nobs}{numbers of observations in regimes 1 and 2.}
 #' \item{model1,model2}{estimated models of regimes 1 and 2.}
 #' \item{thr}{threshold value.}
-#' \item{D}{D} 
+#' \item{D}{a set of threshold values.} 
 #' \item{RSS}{RSS}
 #' \item{AIC}{AIC value}
 #' \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 #' \item{sresi}{standardized residuals.}
 #' @examples
 #' arorder=rep(1,2)
-#' ar.coef=matrix(c(0.7,-0.8),k,1)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' est=uTAR(y$series,1,1,1,y$series,c(0.2,0.8),100,TRUE,c(0.2,0.8))
 #' @export
@@ -222,10 +222,10 @@ cnst = rep(include.mean,2), sresi=sresi)
 }
 
 
-#' Search for Threshold Value of a SETAR Model
+#' Search for Threshold Value of A Two-Regime SETAR Model
 #'
-#' Search for the threshold of a SETAR model for a given range of threshold candidates.
-#' Perform recursive LS estimation.
+#' Search for the threshold of a SETAR model for a given range of candidates for threshold values,
+#' and perform recursive LS estimation.
 #' The program uses a grid to search for threshold value.
 #' It is a conservative approach, but might be more reliable than the Li and Tong (2016) procedure.
 #' @param y a vector of time series.
@@ -248,13 +248,13 @@ cnst = rep(include.mean,2), sresi=sresi)
 #' \item{model1,model2}{estimated models of regimes 1 and 2.}
 #' \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 #' \item{thr}{threshold value.}
-#' \item{D}{D.}
-#' \item{RSS}{RSS.}
+#' \item{D}{a set of possible threshold values.}
+#' \item{RSS}{residual sum of squares.}
 #' \item{information}{information criterion.}
 #' \item{sresi}{standardized residuals.} 
 #' @examples
 #' arorder=rep(1,2)
-#' ar.coef=matrix(c(0.7,-0.8),k,1)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' uTAR.grid(y$series,1,1,1,y$series,c(0,1),c(0.2,0.8),TRUE)
 #' @export
@@ -411,11 +411,11 @@ model2 = m1b,thr=thr, D=D, RSS=RSS,information=infc,sresi=sresi)
 
 #' General Estimation of TAR Models
 #'
-#' General estimation of TAR models with known thresholds. 
+#' General estimation of TAR models with known threshold values. 
 #' It perform LS estimation of a univariate TAR model, and can handle multiple regimes.
 #' @param y time series.
-#' @param arorder: AR order of each regime. The number of regime is the length of arorder.
-#' @param thr: given threshould(s). There are k-1 threshold for a k-regime model.
+#' @param arorder AR order of each regime. The number of regime is the length of arorder.
+#' @param thr given threshould(s). There are k-1 threshold for a k-regime model.
 #' @param d delay for threshold variable, default is 1.
 #' @param thrV external threhold variable if any. If it is not NULL, thrV must have the same length as that of y.
 #' @param include.mean a logical value indicating whether constant terms are included. Default is TRUE.
@@ -435,7 +435,7 @@ model2 = m1b,thr=thr, D=D, RSS=RSS,information=infc,sresi=sresi)
 #' \item{AIC}{AIC value.}
 #' @examples
 #' arorder=rep(1,2)
-#' ar.coef=matrix(c(0.7,-0.8),k,1)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' est=uTAR.est(y$series,arorder,0,1)
 #' @export
@@ -543,7 +543,7 @@ sresi=sresi,nobs=nobs,delay=d,cnst=include.mean, AIC=AIC)
 #' \item{Ysim}{fitted y.}
 #' @examples
 #' arorder=rep(1,2)
-#' ar.coef=matrix(c(0.7,-0.8),k,1)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' est=uTAR.est(y$series,arorder,0,1)
 #' pred=uTAR.pred(est,100,1,100,0.95,TRUE)

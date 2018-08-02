@@ -35,19 +35,19 @@ uTAR returns a list with components:
 \item{nobs}{numbers of observations in regimes 1 and 2.}
 \item{model1,model2}{estimated models of regimes 1 and 2.}
 \item{thr}{threshold value.}
-\item{D}{D} 
+\item{D}{a set of threshold values.} 
 \item{RSS}{RSS}
 \item{AIC}{AIC value}
 \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 \item{sresi}{standardized residuals.}
 }
 \description{
-Estimation of a univariate two-regime SETAR model, including threshold.
+Estimation of a univariate two-regime SETAR model, including threshold value.
 The procedure of Li and Tong (2016) is used to search for the threshold.
 }
 \examples{
 arorder=rep(1,2)
-ar.coef=matrix(c(0.7,-0.8),k,1)
+ar.coef=matrix(c(0.7,-0.8),2,1)
 y=uTAR.sim(100,arorder,ar.coef,1,0)
 est=uTAR(y$series,1,1,1,y$series,c(0.2,0.8),100,TRUE,c(0.2,0.8))
 }

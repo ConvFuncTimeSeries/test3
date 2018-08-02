@@ -1,11 +1,14 @@
-#' Create Dummy Variables for High-Frequency iIntraday Seasonality
+#' Create Dummy Variables for High-Frequency Intraday Seasonality
 #'
+#' Create dummy variables for high-frequency intraday seasonality.
 #' @param int length of time interval in minutes.
-#' @param Fopen number of dummies from the market open.
-#' @param Tend number of dummies to the market close.
+#' @param Fopen number of dummies/intervals from the market open.
+#' @param Tend number of dummies/intervals to the market close.
 #' @param days number of trading days in the data.
-#' @param pooled
-#' @param skipmin
+#' @param pooled a logical value indicating whether the data are pooled.
+#' @param skipmin the number of minites omitted from the opening.
+#' @examples 
+#' x=hfDummy(5,Fopen=4,Tend=4,days=2,skipmin=15)
 #' @export
 "hfDummy" <- function(int=1,Fopen=10,Tend=10,days=1,pooled=1,skipmin=0){
 nintval=(6.5*60-skipmin)/int
@@ -60,7 +63,8 @@ hfDummy <- X
 
 ######### factorial product #####
 #' @export
-"factorial" <- function(n,log=T){
+######### factorial product #####
+"factorialOwn" <- function(n,log=T){
 x=c(1:n)
 if(log){
 x=log(x)
@@ -71,6 +75,5 @@ y=cumprod(x)
 }
 y[n]
 }
-
 
 

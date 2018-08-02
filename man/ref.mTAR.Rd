@@ -2,27 +2,27 @@
 % Please edit documentation in R/m_SETAR.r
 \name{ref.mTAR}
 \alias{ref.mTAR}
-\title{Refine a Fitted 2-Regime Multivariate TAR Models}
+\title{Refine A Fitted 2-Regime Multivariate TAR Model}
 \usage{
 ref.mTAR(m1, thres = 1)
 }
 \arguments{
-\item{m1}{A fitted mTAR object.}
+\item{m1}{a fitted mTAR object.}
 
-\item{thres}{The threshold value.}
+\item{thres}{threshold value.}
 }
 \value{
 ref.mTAR returns a list with following components:
-\item{data}{data matrix, y.}
+\item{data}{data matrix, \code{y}.}
 \item{arorder}{AR orders of regimes 1 and 2.}
 \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
-\item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns shows these in regime 2.}
+\item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns shows these in regime 2.}
 \item{residuals}{estimated innovations.}
 \item{sresi}{standard residuals.}
 \item{criteria}{overall information criteria.}
 }
 \description{
-Refine a fitted 2-regime multivariate TAR models using "thres" as threshold for t-ratios.
+Refine a fitted 2-regime multivariate TAR model using "thres" as threshold for t-ratios.
 }
 \examples{
 phi1=matrix(c(0.5,0.7,0.3,0.2),2,2)

@@ -34,7 +34,7 @@ MSM.sim returns a list with components:
 \item{phi1, phi2}{the AR coefficients for two regimes.}
 }
 \description{
-Generate Univeraite 2-regime Markov Switching Models
+Generate univeraite 2-regime Markov switching models.
 }
 \examples{
 y=MSM.sim(100,c(1,1),0.7,-0.5,c(0.5,0.6),c(1,1),c(0,0),500)

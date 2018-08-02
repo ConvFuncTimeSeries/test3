@@ -29,7 +29,9 @@ thr.test(y, p = 1, d = 1, thrV = NULL, ini = 40, include.mean = T)
 Threshold nonlinearity test.
 }
 \examples{
-y=MSM.sim(100,c(1,1),0.7,-0.5,c(0.5,0.6),c(1,1),c(0,0),500)
+arorder=rep(1,2)
+ar.coef=matrix(c(0.7,-0.8),2,1)
+y=uTAR.sim(100,arorder,ar.coef,1,0)
 thr.test(y$series,1,1,y$series,40,TRUE)
 }
 \references{

@@ -1,4 +1,6 @@
 #' Generate Univeraite 2-regime Markov Switching Models
+#'
+#' Generate univeraite 2-regime Markov switching models.
 #' @param nob number of observations.
 #' @param order AR order for each regime.
 #' @param phi1,phi2 AR coefficients.
@@ -72,14 +74,16 @@ sigma=sigma,cnst=cnst,order=order,phi1=phi1,phi2=phi2)
 #' Fitting Univariate Autoregressive Markov Switching Models
 #'
 #' Fit autoregressive Markov switching models to a univariate time series using the package MSwM.
-#' @param y a time series
-#' @param p AR order
-#' @param nregime the number of regimes
-#' @param include.mean a logical value for including constant terms
-#' @param sw logical values for whether coefficients are switching. The length of sw has to be equal of the number of coefficients in the model plus include.mean.
-#' @return MSM.fit returns an object of class MSM.lm or MSM.glm, depending on the input model.
+#' @param y a time series.
+#' @param p AR order.
+#' @param nregime the number of regimes.
+#' @param include.mean a logical value for including constant terms.
+#' @param sw logical values for whether coefficients are switching. The length of \code{sw} has to be equal of the number of coefficients in the model plus include.mean.
+#' @return \code{MSM.fit} returns an object of class code{MSM.lm} or \code{MSM.glm}, depending on the input model.
 #' @examples
 #' y=MSM.sim(100,c(1,1),0.7,-0.5,c(0.5,0.6),c(1,1),c(0,0),500)
+#' library(parallel)
+#' library(MSwM)
 #' MSM.fit(y$series,1,2,TRUE,c(TRUE,TRUE,TRUE))
 #' @export
 "MSM.fit" <- function(y,p,nregime=2,include.mean=T,sw=NULL){

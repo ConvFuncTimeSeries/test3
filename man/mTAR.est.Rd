@@ -8,7 +8,7 @@ mTAR.est(y, arorder = c(1, 1), thr = c(0), delay = c(1, 1), thrV = NULL,
   include.mean = c(TRUE, TRUE), output = TRUE)
 }
 \arguments{
-\item{y}{vector time series}
+\item{y}{vector time series.}
 
 \item{arorder}{AR order of each regime. The number of regime is length of arorder.}
 
@@ -24,10 +24,10 @@ mTAR.est(y, arorder = c(1, 1), thr = c(0), delay = c(1, 1), thrV = NULL,
 }
 \value{
 mTAR.est returns a list with the following components:
-\item{data}{the data matrix, y.}
-\item{k}{the dimension of y.}
+\item{data}{the data matrix, \code{y}.}
+\item{k}{the dimension of \code{y}.}
 \item{arorder}{AR orders of regimes 1 and 2.}
-\item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns show these in regime 2.}
+\item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns show these in regime 2.}
 \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
 \item{thr}{threshold value.}
 \item{residuals}{estimated innovations.}
@@ -35,7 +35,7 @@ mTAR.est returns a list with the following components:
 \item{nobs}{numbers of observations in different regimes.}
 \item{cnst}{logical values indicating whether the constant terms are included in different regimes.}
 \item{AIC}{AIC value.}
-\item{delay}{two elements (i,d) with "i" being the component and "d" the delay for threshold variable.}
+\item{delay}{two elements (\code{i,d}) with "\code{i}" being the component and "\code{d}" the delay for threshold variable.}
 \item{thrV}{values of threshold variable.}
 }
 \description{

@@ -14,7 +14,7 @@ rankQ(zt, lag = 10, output = TRUE)
 \item{ouput}{a logical value for output. Default is TRUE.}
 }
 \value{
-rankQ function outputs the test statistics and p-values for Portmanteau tests, and returns a list with components:
+\code{rankQ} function outputs the test statistics and p-values for Portmanteau tests, and returns a list with components:
 \item{Qstat}{test statistics.}
 \item{pv}{p-values.}
 }

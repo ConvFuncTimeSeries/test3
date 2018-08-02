@@ -10,6 +10,10 @@ uTAR.est(y, arorder = c(1, 1), thr = c(0), d = 1, thrV = NULL,
 \arguments{
 \item{y}{time series.}
 
+\item{arorder}{AR order of each regime. The number of regime is the length of arorder.}
+
+\item{thr}{given threshould(s). There are k-1 threshold for a k-regime model.}
+
 \item{d}{delay for threshold variable, default is 1.}
 
 \item{thrV}{external threhold variable if any. If it is not NULL, thrV must have the same length as that of y.}
@@ -17,10 +21,6 @@ uTAR.est(y, arorder = c(1, 1), thr = c(0), d = 1, thrV = NULL,
 \item{include.mean}{a logical value indicating whether constant terms are included. Default is TRUE.}
 
 \item{output}{a logical value for output. Default is TRUE.}
-
-\item{arorder:}{AR order of each regime. The number of regime is the length of arorder.}
-
-\item{thr:}{given threshould(s). There are k-1 threshold for a k-regime model.}
 }
 \value{
 uTAR.est returns a list with components:
@@ -38,12 +38,12 @@ uTAR.est returns a list with components:
 \item{AIC}{AIC value.}
 }
 \description{
-General estimation of TAR models with known thresholds. 
+General estimation of TAR models with known threshold values. 
 It perform LS estimation of a univariate TAR model, and can handle multiple regimes.
 }
 \examples{
 arorder=rep(1,2)
-ar.coef=matrix(c(0.7,-0.8),k,1)
+ar.coef=matrix(c(0.7,-0.8),2,1)
 y=uTAR.sim(100,arorder,ar.coef,1,0)
 est=uTAR.est(y$series,arorder,0,1)
 }

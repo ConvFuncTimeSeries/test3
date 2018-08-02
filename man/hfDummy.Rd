@@ -2,7 +2,7 @@
 % Please edit documentation in R/hf_dummy.r
 \name{hfDummy}
 \alias{hfDummy}
-\title{Create Dummy Variables for High-Frequency iIntraday Seasonality}
+\title{Create Dummy Variables for High-Frequency Intraday Seasonality}
 \usage{
 hfDummy(int = 1, Fopen = 10, Tend = 10, days = 1, pooled = 1,
   skipmin = 0)
@@ -10,12 +10,19 @@ hfDummy(int = 1, Fopen = 10, Tend = 10, days = 1, pooled = 1,
 \arguments{
 \item{int}{length of time interval in minutes.}
 
-\item{Fopen}{number of dummies from the market open.}
+\item{Fopen}{number of dummies/intervals from the market open.}
 
-\item{Tend}{number of dummies to the market close.}
+\item{Tend}{number of dummies/intervals to the market close.}
 
 \item{days}{number of trading days in the data.}
+
+\item{pooled}{a logical value indicating whether the data are pooled.}
+
+\item{skipmin}{the number of minites omitted from the opening.}
+}
+\value{
+\code{hfDummy} returns
 }
 \description{
-Create Dummy Variables for High-Frequency iIntraday Seasonality
+Create dummy variables for high-frequency intraday seasonality.
 }

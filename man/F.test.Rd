@@ -7,11 +7,11 @@
 F.test(x, order, thres = 0)
 }
 \arguments{
-\item{x}{time series}
+\item{x}{time series.}
 
-\item{order}{AR order}
+\item{order}{AR order.}
 
-\item{thres}{threshold value}
+\item{thres}{threshold value.}
 }
 \value{
 The function outputs the test statistic and its p-value, and return a list with components:

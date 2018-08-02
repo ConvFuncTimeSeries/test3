@@ -1,6 +1,6 @@
-#' Genreates Two-Regime (VAR) Models
+#' Generate Two-Regime (VAR) Models
 #'
-#' Genreates two-regime multivariate vector auto-regressive models.
+#' Generates two-regime multivariate vector auto-regressive models.
 #' @param nob number of observations.
 #' @param thr threshold value.
 #' @param phi1 VAR coefficient matrix of regime 1.
@@ -130,13 +130,13 @@ delay=delay, n1=n1, n2 = (nob-n1))
 #'
 #' Estimation of a multivariate two-regime SETAR model, including threshold.
 #' The procedure of Li and Tong (2016) is used to search for the threshold.
-#' @param y a (nT-by-k) data matrix of multivariate time series, where nT is the sample size and k is the dimension.
+#' @param y a (\code{nT}-by-\code{k}) data matrix of multivariate time series, where \code{nT} is the sample size and \code{k} is the dimension.
 #' @param p1 AR-order of regime 1.
 #' @param p2 AR-order of regime 2.
 #' @param d delay for threshold variable, default value is 1.
-#' @param thr threshold variable. Estimation is needed if thr = NULL.
-#' @param delay two elements (i,d) with "i" being the component and "d" the delay for threshold variable.
+#' @param thr threshold variable. Estimation is needed if \code{thr} = NULL.
 #' @param thrV vector of threshold variable. If it is not null, thrV must have the same sample size of that of y.
+#' @param delay two elements (i,d) with "i" being the component and "d" the delay for threshold variable.
 #' @param Trim lower and upper quantiles for possible threshold value.
 #' @param k0 the maximum number of threshold values to be evaluated.
 #' @param include.mean logical values indicating whether constant terms are included.
@@ -145,17 +145,17 @@ delay=delay, n1=n1, n2 = (nob-n1))
 #' Li, D., and Tong. H. (2016) Nested sub-sample search algorithm for estimation of threshold models. \emph{Statisitca Sinica}, 1543-1554.
 #' @return mTAR returns a listh with the following components:
 #' \item{data}{the data matrix, y.}
-#' \item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns show these in regime 2.}
+#' \item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns show these in regime 2.}
 #' \item{arorder}{AR orders of regimes 1 and 2.}
 #' \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
 #' \item{residuals}{estimated innovations.}
 #' \item{nobs}{numbers of observations in regimes 1 and 2.}
 #' \item{model1, model2}{estimated models of regimes 1 and 2.}
 #' \item{thr}{threshold value.}
-#' \item{delay}{two elements (i,d) with "i" being the component and "d" the delay for threshold variable.}
+#' \item{delay}{two elements (\code{i},\code{d}) with "\code{i}" being the component and "\code{d}" the delay for threshold variable.}
 #' \item{thrV}{vector of threshold variable.}
-#' \item{D}{D.}
-#' \item{RSS}{RSS.}
+#' \item{D}{a set of positive threshold values.}
+#' \item{RSS}{residual sum of squares.}
 #' \item{information}{overall information criteria.}
 #' \item{cnst}{logical values indicating whether the constant terms are included in regimes 1 and 2.}
 #' \item{sresi}{standardized residuals.} 
@@ -167,8 +167,9 @@ delay=delay, n1=n1, n2 = (nob-n1))
 #' c1=c(0,0)
 #' c2=c(0,0)
 #' delay=c(1,1)
-#' y=mTAR.sim(100,0,phi1,phi2,sigma1,sigma2,c1,c2,delay,ini=500)
+#' y=mTAR.sim(1000,0,phi1,phi2,sigma1,sigma2,c1,c2,delay,ini=500)
 #' est=mTAR(y$series,1,1,0,y$series,delay,Trim,300,include.mean,"AIC")
+#' est2=mTAR(y$series,1,1,NULL,y$series,delay,Trim,300,include.mean,"AIC")
 #' @export 
 "mTAR" <- function(y,p1,p2,thr=NULL,thrV=NULL,delay=c(1,1),Trim=c(0.15,0.85),k0=300,include.mean=TRUE,score="AIC"){
 if(!is.matrix(y))y <- as.matrix(y)
@@ -291,7 +292,7 @@ cnst=rep(include.mean,2),sresi=sresi)
 #' Estimation of Multivariate TAR Models
 #'
 #' Estimation of mutlivariate TAR models with given thresholds. It can handle multiple regimes.
-#' @param y vector time series
+#' @param y vector time series.
 #' @param arorder AR order of each regime. The number of regime is length of arorder.
 #' @param thr threshould value(s). There are k-1 threshold for a k-regime model.
 #' @param delay two elements (i,d) with "i" being the component and "d" the delay for threshold variable.
@@ -299,10 +300,10 @@ cnst=rep(include.mean,2),sresi=sresi)
 #' @param include.mean logical values indicating whether constant terms are included. Default is TRUE for all.
 #' @param output a logical value indicating four output. Default is TRUE.
 #' @return mTAR.est returns a list with the following components:
-#' \item{data}{the data matrix, y.}
-#' \item{k}{the dimension of y.}
+#' \item{data}{the data matrix, \code{y}.}
+#' \item{k}{the dimension of \code{y}.}
 #' \item{arorder}{AR orders of regimes 1 and 2.}
-#' \item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns show these in regime 2.}
+#' \item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns show these in regime 2.}
 #' \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
 #' \item{thr}{threshold value.}
 #' \item{residuals}{estimated innovations.}
@@ -310,7 +311,7 @@ cnst=rep(include.mean,2),sresi=sresi)
 #' \item{nobs}{numbers of observations in different regimes.}
 #' \item{cnst}{logical values indicating whether the constant terms are included in different regimes.}
 #' \item{AIC}{AIC value.}
-#' \item{delay}{two elements (i,d) with "i" being the component and "d" the delay for threshold variable.}
+#' \item{delay}{two elements (\code{i,d}) with "\code{i}" being the component and "\code{d}" the delay for threshold variable.}
 #' \item{thrV}{values of threshold variable.}
 #' @examples
 #' phi1=matrix(c(0.5,0.7,0.3,0.2),2,2)
@@ -424,16 +425,16 @@ sresi=sresi,nobs=nobs,cnst=include.mean, AIC=AIC, delay=delay,thrV=thrV)
 
 
 
-#' Refine a Fitted 2-Regime Multivariate TAR Models 
+#' Refine A Fitted 2-Regime Multivariate TAR Model 
 #'
-#' Refine a fitted 2-regime multivariate TAR models using "thres" as threshold for t-ratios.
-#' @param m1 A fitted mTAR object.
-#' @param thres The threshold value.
+#' Refine a fitted 2-regime multivariate TAR model using "thres" as threshold for t-ratios.
+#' @param m1 a fitted mTAR object.
+#' @param thres threshold value.
 #' @return ref.mTAR returns a list with following components:
-#' \item{data}{data matrix, y.}
+#' \item{data}{data matrix, \code{y}.}
 #' \item{arorder}{AR orders of regimes 1 and 2.}
 #' \item{sigma}{estimated innovational covariance matrices of regimes 1 and 2.}
-#' \item{beta}{a (p*k+1)-by-(2k) matrices. The first k columns show the estimation results in regime 1, and the second k columns shows these in regime 2.}
+#' \item{beta}{a (\code{p*k+1})-by-(\code{2k}) matrices. The first \code{k} columns show the estimation results in regime 1, and the second \code{k} columns shows these in regime 2.}
 #' \item{residuals}{estimated innovations.}
 #' \item{sresi}{standard residuals.}
 #' \item{criteria}{overall information criteria.}
@@ -594,7 +595,9 @@ ref.mTAR <- list(data=y,arorder=arorder,sigma=Sigma,beta=beta,residuals=resi,sre
 }
 
 
-#' Prediction of a Fitted Multivariate TAR Model
+#' Prediction of A Fitted Multivariate TAR Model
+#'
+#' Prediction of a fitted multivariate TAR model.
 #' @param model multivariate TAR model.
 #' @param orig forecast origin.
 #' @param h forecast horizon.
@@ -604,7 +607,7 @@ ref.mTAR <- list(data=y,arorder=arorder,sigma=Sigma,beta=beta,residuals=resi,sre
 #' @return mTAR.pred returns a list with components:
 #' \item{model}{the multivariate TAR model.}
 #' \item{pred}{prediction.}
-#' \item{Ysim}{fitted y.}
+#' \item{Ysim}{fitted \code{y}.}
 #' @examples
 #' phi1=matrix(c(0.5,0.7,0.3,0.2),2,2)
 #' phi2=matrix(c(0.4,0.6,0.5,-0.5),2,2)
@@ -706,8 +709,6 @@ if(output){
 mTAR.pred <- list(data=y,pred = pred,Ysim=Ysim)
 }
 
-
-#' This program performs multivariate linear regression analysis.
 #' @export
 "MlmNeSS" <- function(y,z,subset=NULL,SD=FALSE,include.mean=TRUE){
 # z: design matrix, including 1 as its first column if constant is needed.

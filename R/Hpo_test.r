@@ -15,7 +15,9 @@
 #' \item{df}{the numerator and denominator degrees of freedom.}
 #' \item{ini}{initial number of data to start RLS estimation.} 
 #' @examples
-#' y=MSM.sim(100,c(1,1),0.7,-0.5,c(0.5,0.6),c(1,1),c(0,0),500)
+#' arorder=rep(1,2)
+#' ar.coef=matrix(c(0.7,-0.8),2,1)
+#' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' thr.test(y$series,1,1,y$series,40,TRUE)
 #' @export
 "thr.test" <- function(y,p=1,d=1,thrV=NULL,ini=40,include.mean=T){
@@ -227,7 +229,7 @@ backtest <- list(origin=orig,error=err,rmse=rmse,mabso=mabso,bias=bias)
 
 
 
-### Backtest for Univariate TAR Models
+#' Backtest for Univariate TAR Models
 #'
 #' Perform back-test of a univariate SETAR model.
 #' @param model SETAR model.
@@ -240,6 +242,10 @@ backtest <- list(origin=orig,error=err,rmse=rmse,mabso=mabso,bias=bias)
 #' y=uTAR.sim(100,arorder,ar.coef,1,0)
 #' est=uTAR.est(y$series,arorder,0,1)
 #' backTAR(est,50,1,3000)
+#' @return \code{backTAR} returns a list of components:
+#' \item{model}{SETAR model.}
+#' \item{error}{prediction errors.}
+#' \item{State}{predicted states.}
 #' @export
 "backTAR" <- function(model,orig,h=1,iter=3000){
 y <- model$data
@@ -322,42 +328,6 @@ for (j in 1:nregime){
 backTAR <- list(model=model,error=Err,State=State)
 }
 
-### Rank-based Portmanteau tests
-"rankQ" <- function(zt,lag=10,output=TRUE){
-## Performs rank-based portmanteau statistics
-nT <- length(zt)
-Rt <- rank(zt)
-erho <- vrho <- rho <- NULL
-rbar <- (nT+1)/2
-sse <- nT*(nT^2-1)/12
-Qstat <- NULL
-pv <- NULL
-rmRt <- Rt - rbar
-deno <- 5*(nT-1)^2*nT^2*(nT+1)
-n1 <- 5*nT^4
-Q <- 0
-for (i in 1:lag){
- tmp <- crossprod(rmRt[1:(nT-i)],rmRt[(i+1):nT])
- tmp <- tmp/sse
- rho <- c(rho,tmp)
- er <- -(nT-i)/(nT*(nT-1))
- erho <- c(erho,er)
- vr <- (n1-(5*i+9)*nT^3+9*(i-2)*nT^2+2*i*(5*i+8)*nT+16*i^2)/deno
- vrho <- c(vrho,vr)
- Q <- Q+(tmp-er)^2/vr
- Qstat <- c(Qstat,Q)
- pv <- c(pv,1-pchisq(Q,i))
- }
-if(output){
- cat("Results of rank-based Q(m) statistics: ","\n")
- Out <- cbind(c(1:lag),rho,Qstat,pv)
- colnames(Out) <- c("Lag","ACF","Qstat","p-value")
- print(round(Out,3))
- }
-
-rankQ <- list(rho = rho, erho = erho, vrho=vrho,Qstat=Qstat,pv=pv)
-}
-
 
 #' Rank-Based Portmanteau Tests
 #'
@@ -365,7 +335,7 @@ rankQ <- list(rho = rho, erho = erho, vrho=vrho,Qstat=Qstat,pv=pv)
 #' @param zt time series.
 #' @param lag the maximum lag to calculate the test statistic.
 #' @param ouput a logical value for output. Default is TRUE.
-#' @return rankQ function outputs the test statistics and p-values for Portmanteau tests, and returns a list with components:
+#' @return \code{rankQ} function outputs the test statistics and p-values for Portmanteau tests, and returns a list with components:
 #' \item{Qstat}{test statistics.}
 #' \item{pv}{p-values.}
 #' @examples
@@ -410,9 +380,9 @@ rankQ <- list(rho = rho, erho = erho, vrho=vrho,Qstat=Qstat,pv=pv)
 #' F Test for Nonlinearity
 #'
 #' Compute the F-test statistic for nonlinearity
-#' @param x time series
-#' @param order AR order
-#' @param thres threshold value
+#' @param x time series.
+#' @param order AR order.
+#' @param thres threshold value.
 #' @return The function outputs the test statistic and its p-value, and return a list with components:
 #' \item{test.stat}{test statistic.}
 #' \item{p.value}{p-value.}
@@ -451,16 +421,16 @@ if (missing(order)) order=ar(x)$order
 #' ND Test
 #'
 #' Compute the ND test statistic of Pena and Rodriguez (2006, JSPI).
-#' @param x time series
-#' @param m
-#' @param p
-#' @param q
+#' @param x time series.
+#' @param m the maximum number of lag of correlation to test.
+#' @param p AR order.
+#' @param q MA order.
 #' @references
-#' Pena, D, and Rodriguez, J. (2006) The log of the determinant of the autocorrelation matrix for testing goodness of fit in time series. \emph{Journal of Statistical Planning and Inference}, 136, 2706-2718.
-#' @return PRnd function outputs the ND test statistic and its p-value.
+#' Pena, D., and Rodriguez, J. (2006) A powerful Portmanteau test of lack of fit for time series. series. \emph{Journal of American Statistical Association}, 97, 601-610.
+#' @return \code{PRnd} function outputs the ND test statistic and its p-value.
 #' @examples
-#' y=rnorm(100)
-#' PRnd(y,10,0,0)
+#' y=arima.sim(n=500,list(ar=c(0.8,-0.6,0.7)))
+#' PRnd(y,10,3,0)
 #' @export
 "PRnd" <- function(x,m=10,p=0,q=0){
 pq <- p+q

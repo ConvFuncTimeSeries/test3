@@ -7,18 +7,24 @@
 PRnd(x, m = 10, p = 0, q = 0)
 }
 \arguments{
-\item{x}{time series}
+\item{x}{time series.}
+
+\item{m}{the maximum number of lag of correlation to test.}
+
+\item{p}{AR order.}
+
+\item{q}{MA order.}
 }
 \value{
-PRnd function outputs the ND test statistic and its p-value.
+\code{PRnd} function outputs the ND test statistic and its p-value.
 }
 \description{
 Compute the ND test statistic of Pena and Rodriguez (2006, JSPI).
 }
 \examples{
-y=rnorm(100)
-PRnd(y,10,0,0)
+y=arima.sim(n=500,list(ar=c(0.8,-0.6,0.4)))
+PRnd(y,10,3,0)
 }
 \references{
-Pena, D, and Rodriguez, J. (2006) The log of the determinant of the autocorrelation matrix for testing goodness of fit in time series. \emph{Journal of Statistical Planning and Inference}, 136, 2706-2718.
+Pena, D., and Rodriguez, J. (2006) A powerful Portmanteau test of lack of fit for time series. series. \emph{Journal of American Statistical Association}, 97, 601-610.
 }
