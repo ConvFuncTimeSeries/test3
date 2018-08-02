@@ -11,5 +11,5 @@ RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
-Imports: Rdpack, MSwM, parallel
+Imports: Rdpack, MSwM, parallel, splines, MASS, dlm
 RdMacros: Rdpack
